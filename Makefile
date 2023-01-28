@@ -43,7 +43,7 @@ CR_OBJECTS = \
 
 MD_OBJECTS = \
 	mkdisk.o \
-        common.o \
+    common.o \
 	error.o
 
 HC_OBJECTS = \
@@ -92,30 +92,26 @@ CFLAGS += $(DEBUG) $(ENDIAN) $(DEFAULT_ROM) $(READLINE) $(DISKDIR) $(IFLAGS) \
 
 LIBS = $(XLIB) $(READLINELIBS) $(EXTRALIBS)
 
-ZMACFLAGS = -h
+ZMACFLAGS = 
 
-.SUFFIXES: .z80 .cmd .dct .man .txt .hex .html
+.SUFFIXES: .z80 .cmd .dct .man .txt .hex .html .man.pdf
 
-.z80.cmd:
-	zmac $(ZMACFLAGS) -o $*.hex -x $*.lst $<
+.hex.cmd:
 	hex2cmd $*.hex > $*.cmd
-	rm -f $*.hex
 
-.z80.dct:
-	zmac $(ZMACFLAGS) -o $*.hex -x $*.lst $<
+.hex.dct:
 	hex2cmd $*.hex > $*.dct
-	rm -f $*.hex
 
 .z80.hex:
-	zmac $(ZMACFLAGS) -o $*.hex -x $*.lst $<
+	zmac $(ZMACFLAGS) -o $*.hex -o $*.lst $<
 
 .man.txt:
-	nroff -man -c -Tascii $< | colcrt - | cat -s > $*.txt
+	nroff -man -c -Tascii $< > $*.txt
 
 .html.txt:
 	html2text -nobs -style pretty $< >$@
 
-%.man.pdf: %.man
+.man.man.pdf:
 	groff -Tpdf -man $< > $@
 
 xtrs: $(OBJECTS) $(X_OBJECTS)

@@ -4,11 +4,11 @@
 
 # Set these to where you want installed stuff to go, if you install
 
-PREFIX = $(DESTDIR)/usr
-BINDIR = $(PREFIX)/bin
-MANDIR = $(PREFIX)/share/man
-DOCDIR = $(PREFIX)/share/doc/xtrs
-SHAREDIR = $(PREFIX)/share/xtrs
+PREFIX   ?= $(DESTDIR)/usr/local
+BINDIR   ?= $(PREFIX)/bin
+MANDIR   ?= $(PREFIX)/share/man
+DOCDIR   ?= $(PREFIX)/share/doc/xtrs
+SHAREDIR ?= $(PREFIX)/share/xtrs
 
 # If your machine is not a sun, vax, or DEC MIPS, uncomment the line below
 # if the processor has big-endian byte ordering.  If you're not sure what
@@ -42,10 +42,10 @@ CASSETTE = cassette.sh
 # operating system.
 
 # for -model I
-BUILT_IN_ROM1 = fakerom.hex
+BUILT_IN_ROM1  = fakerom.hex
 BUILT_IN_ROM1X = esfrom.hex
 # for -model III and -model 4
-BUILT_IN_ROM3 = fakerom.hex
+BUILT_IN_ROM3  = fakerom.hex
 # for -model 4P
 BUILT_IN_ROM4P = xtrsrom4p.hex
 
@@ -55,8 +55,8 @@ BUILT_IN_ROM4P = xtrsrom4p.hex
 # built-in ROM.
 
 DEFAULT_ROM = -DDEFAULT_ROM1='"$(SHAREDIR)/level2rom.hex"' \
-	      -DDEFAULT_ROM1X='"$(SHAREDIR)/esfrom.hex"' \
-              -DDEFAULT_ROM3='"$(SHAREDIR)/romimage.m3"' \
+	          -DDEFAULT_ROM1X='"$(SHAREDIR)/esfrom.hex"'   \
+              -DDEFAULT_ROM3='"$(SHAREDIR)/romimage.m3"'   \
               -DDEFAULT_ROM4P='"$(SHAREDIR)/romimage.m4p"'
 
 # If you would like to change where xtrs looks for disk?-? files, edit
@@ -68,12 +68,12 @@ DISKDIR = -DDISKDIR='"."'
 # get it) and would like to use it with the built-in Z80 debugger, use
 # these lines.
 
-READLINE = -DREADLINE
+READLINE     = -DREADLINE
 READLINELIBS = -lreadline
 
 # Select debugging symbols (-g) and/or optimization (-O2, etc.)
 
-DEBUG = -O2 -g -Wall -Wextra -Wno-unused-parameter
+DEBUG  = -O2 -g -Wall -Wextra -Wno-unused-parameter
 #DEBUG = -g -DKBDEBUG -DXDEBUG
 #DEBUG = -g
 #DEBUG = -Wall
@@ -84,12 +84,13 @@ DEBUG = -O2 -g -Wall -Wextra -Wno-unused-parameter
 
 # If you need a different path for libraries:
 
-LDFLAGS += -L/usr/lib/X11
+LDFLAGS += -L/usr/local/lib -L/usr/lib/X11
 #LDFLAGS = -non_shared -L/usr/X11/lib
 
 # If you need a different path for include files:
 
-IFLAGS = -I/usr/include/X11
+# for FreeBSD
+IFLAGS = -I/usr/local/include -I/usr/local/include/X11
 
 # Re-define this if your X library is strangely named:
 
